@@ -1,7 +1,8 @@
-///// CONDITIONALS AND COMPARISONS \\\\\
+#############################
+CONDITIONALS AND COMPARISONS
+#############################
 
 # Comparisons
-
 # There are some standard comparison operators that we’ll use that match pretty closely to those used in mathematical equations
 >>> 1 < 2
 True
@@ -82,11 +83,11 @@ Was False
 ...
 name is 5 characters
 
-
-///// WHILE LOOP \\\\\
+###########
+WHILE LOOP 
+###########
 
 # The most basic type of loop that we have at our disposal is the while loop. This type of loop repeats itself based on a condition that we pass to it.
-
 # infinite loop
 >>> while True:
 ...     print("looping")
@@ -134,9 +135,10 @@ We're counting odd numbers: 9
 ...
 We're counting odd numbers: 1
 
-
-///// FOR LOOP \\\\\
-
+#########
+FOR LOOP
+#########
+ 
 # The most common use we have for looping is when we want to execute some code for each item in a sequence. For this type of looping or iteration, we’ll use the for loop. The general structure for a for loop is:
 for TEMP_VAR in SEQUENCE:
     pass
@@ -219,7 +221,9 @@ Age of: 40
 Person Named: kayla
 Age of: 21
 
-///// LOGIC OPERATIONS \\\\\
+#################
+LOGIC OPERATIONS
+#################
 
 # NOT operation - empty string is a “falsy” value, so not "" will always return True
 >>> name = ""
