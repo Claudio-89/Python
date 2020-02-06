@@ -1,5 +1,6 @@
-### STRINGS ###
-
+########
+STRINGS
+########
 >>> "pass" + "word"
 'password'
 >>> "Ha" * 4
@@ -28,8 +29,9 @@ Slash\Character
 >>> print("\"Double\" in Double")
 "Double" in Double
 
-### NUMBERS (int and float) ###
-
+########################
+NUMBERS (int and float)
+########################
 >>> 2 + 2 # Addition
 4
 >>> 10 - 4 # Subtraction
@@ -65,9 +67,10 @@ Traceback (most recent call last):
   File "", line 1, in 
 ValueError: could not convert string to float: '1.1 things'
 
-### BOOLEANS and NONE ###
+###################
+ BOOLEANS and NONE
+###################
 # Python has two boolean constants: True and False
-
 >>> True
 True
 >>> type(True)
@@ -84,9 +87,9 @@ False
 True
 >>> None # The constant used to represent nothingness in Python is None. None is a “falsy”, and we’ll often use it to represent when a variable has no value yet.
 
-
-### VARIABLES ###
-
+##########
+VARIABLES
+##########
 >>> my_str = "simple string"
 >>> my_str
 'simple string'
@@ -99,8 +102,9 @@ simple string
 >>> my_str
 'simple string testing testing2'
 
-### LISTS ### 
-
+######
+LISTS 
+######
 >>> my_list = [1, 2, 3, 4, 5]
 >>> my_list
 [1, 2, 3, 4, 5]
@@ -159,9 +163,11 @@ simple string
 ['c']
 >>>
 
-### TUPLES ###
-# Tuples are a fixed width, immutable sequence type. We create tuples using parenthesis ( and ) and at least one comma (,)
+#######
+TUPLES
+#######
 
+# Tuples are a fixed width, immutable sequence type. We create tuples using parenthesis ( and ) and at least one comma (,)
 >>> point = (2.0, 3.0)
 >>> point_3d = point + (4.0,)
 >>> point_3d
@@ -175,8 +181,9 @@ simple string
 4.0
 >>>
 
-### DICTIONARIES (DICTS) ###
-
+#####################
+DICTIONARIES (DICTS)
+#####################
 >>> ages = { 'kevin': 59, 'alex': 29, 'bob': 40 }
 >>> ages
 {'alex': 29, 'kevin': 59, 'bob': 40}
