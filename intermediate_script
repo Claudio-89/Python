@@ -1,0 +1,325 @@
+################################
+PARSING COMMAND LINE PARAMETERS
+################################
+
+# Most of the scripts and utilities that we work with accept positional arguments instead of prompting us for information after we’ve run the command. The simplest way for us to do this in Python is to use the sys module’s argv attribute. Let’s try this out by writing a small script that echoes our first argument back to us
+~/bin/param_echo
+import sys
+
+print(f"First argument {sys.argv[0]}")
+
+# After we make this executable and give it a shot, we see that the first argument is the script itself
+$ chmod u+x ~/bin/param_echo
+$ param_echo testing
+First argument /home/user/bin/param_echo
+
+# That’s not quite what we wanted, but now we know that argv will contain the script and we’ll need to get the index of 1 for our first argument. Let’s adjust our script to echo all of the arguments except the script name and then echo the first positional argument by itself
+~/bin/param_echo
+import sys
+
+print(f"Positional arguments: {sys.argv[1:]}")
+print(f"First argument: {sys.argv[1]}")
+
+# we get a much different result now
+$ param_echo testing
+Positional arguments: ['testing']
+First argument: testing
+$ param_echo testing testing12 'another argument'
+Positional arguments: ['testing', 'testing12', 'another argument']
+First argument: testing
+$ param_echo
+Positional arguments: []
+Traceback (most recent call last):
+  File "/home/user/bin/param_echo", line 6, in 
+    print(f"First argument: {sys.argv[1]}")
+IndexError: list index out of range
+
+# This shows us a few things about working with argv
+# Positional arguments are based on spaces unless we explicitly wrap the argument in quotes
+# We can get a slice of the first index and after without worrying about it being empty
+# We risk an IndexError if we assume that there will be an argument for a specific position and one isn’t given
+# Using sys.argv is the simplest way to allow our scripts to accept positional arguments
+
+#####################################
+ROBUST CLIS WITH 'ARGPARSE' - PART 1
+#####################################
+
+The tool that we’re going to build in this video will need to do the following:
+
+1. Require a filename argument, so it knows what file to read.
+2. Print the contents of the file backward (bottom of the script first, each line printed backward)
+3. Provide help text and documentation when it receives the --help flag.
+4. Accept an optional --limit or -l flag to specify how many lines to read from the file.
+5. Accept a --version flag to print out the current version of the tool.
+
+# building an ArgumentParser with our required argument
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('filename', help='the file to read')
+args = parser.parse_args()
+print(args)
+
+$ chmod u+x ~/bin/reverse-file
+$ reverse-file
+usage: reverse-file [-h] filename
+reverse-file: error: the following arguments are required: filename
+# Since filename is required and wasn’t given the ArgumentParser object recognized the problem and returned a useful error message
+
+reverse-file -h
+usage: reverse-file [-h] filename
+
+positional arguments:
+  filename    the file to read
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+# We need to add a --limit flag with a -l alias
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+
+args = parser.parse_args()
+print(args)
+# To specify that an argument is a flag, we need to place two hyphens at the beginning of the flag’s name. We’ve used the type option for add_argument to state that we want the value converted to an integer, and we specified a shorter version of the flag as our second argument
+
+# Next, we’ll add a --version flag. This one will be a little different because we’re going to use the action option to specify a string to print out when this flag is received
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s 1.0')
+
+args = parser.parse_args()
+print(args)
+# This uses a built-in action type of version which we’ve found in the documentation
+$ reverse-file --version
+reverse-file 1.0
+
+
+######################################
+ROBUST CLIS WITH 'ARGPARSE' - PART 2
+######################################
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s 1.0')
+
+args = parser.parse_args()
+
+with open(args.filename) as f:
+    lines = f.readlines()
+    lines.reverse()
+
+    if args.limit:
+        lines = lines[:args.limit]
+
+    for line in lines:
+        print(line.strip()[::-1])
+
+$ reverse-file xmen_base.txt
+gnihtemoS
+reivaX rosseforP
+relwarcthgiN
+pohsiB
+spolcyC
+enirevloW
+mrotS
+
+$ reverse-file -l 2 xmen_base.txt
+gnihtemoS
+reivaX rosseforP
+
+#############################################
+HANDLING ERRORS WITH TRY/EXCEPT/ELSE/FINALLY
+#############################################
+
+# In our reverse-file script, what happens if the filename doesn’t exist?
+$ reverse-file fake.txt
+Traceback (most recent call last):
+  File "/home/user/bin/reverse-file", line 11, in 
+    with open(args.filename) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'fake.txt'
+# This FileNotFoundError is something that we can expect to happen quite often and our script should handle this situation
+
+# To handle these errors we’re going to utilize the keywords try, except, and else
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s verison 1.0')
+
+args = parser.parse_args()
+
+try:
+    f = open(args.filename)
+    limit = args.limit
+except FileNotFoundError as err:
+    print(f"Error: {err}")
+else:
+    with f:
+        lines = f.readlines()
+        lines.reverse()
+
+        if limit:
+            lines = lines[:limit]
+
+        for line in lines:
+            print(line.strip()[::-1])
+
+# We utilize the try statement to denote that it’s quite possible for an error to happen within it. From there we can handle specific types of errors using the except keyword (we can have more than one). In the event that there isn’t an error, then we want to carry out the code that is in the else block. If we want to execute some code regardless of there being an error or not, we can put that in a finally block at the very end of our t, except for workflow
+
+$ reverse-file fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+
+############
+EXIT STATUS
+############
+
+# When our reverse-file script receives a file that doesn’t exist, we show an error message, but we don’t set the exit status to 1 to be indicative of an error.
+$ reverse-file -l 2 fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+~ $ echo $?
+0
+
+# Let’s use the sys.exit function to accomplish this
+import argparse
+import sys
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s verison 1.0')
+
+args = parser.parse_args()
+
+try:
+    f = open(args.filename)
+    limit = args.limit
+except FileNotFoundError as err:
+    print(f"Error: {err}")
+    sys.exit(1)
+else:
+    with f:
+        lines = f.readlines()
+        lines.reverse()
+
+        if limit:
+            lines = lines[:limit]
+
+        for line in lines:
+            print(line.strip()[::-1])
+
+# Now, if we try our script with a missing file, we will exit with the proper code
+$ reverse-file -l 2 fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+$ echo $?
+1
+
+###################################
+EXECUTE SHELL COMMANDS FROM PYTHON
+###################################
+
+# Sometimes when we’re scripting, we need to call a separate shell command. Not every tool is written in python, but we can still interact with the userland API of other tools
+
+# Executing Shell Commands With subprocess.run
+>>> import subprocess
+>>> proc = subprocess.run(['ls', '-l'])
+total 20
+drwxrwxr-x. 2 user user  54 Jan 28 15:36 bin
+drwxr-xr-x. 2 user user   6 Jan  7  2015 Desktop
+-rw-rw-r--. 1 user user  44 Jan 26 22:16 new_xmen.txt
+-rw-rw-r--. 1 user user  98 Jan 26 21:39 read_file.py
+-rw-rw-r--. 1 user user 431 Aug  6  2015 VNCHOWTO
+-rw-rw-r--. 1 user user  61 Jan 28 14:11 xmen_base.txt
+-rw-------. 1 user user  68 Mar 18  2016 xrdp-chansrv.log
+>>> proc
+CompletedProcess(args=['ls', '-l'], returncode=0)
+
+# Intentionally Raising Errors
+# The subprocess.run function will not raise an error by default if you execute something that returns a non-zero exit status
+>>> new_proc = subprocess.run(['cat', 'fake.txt'])
+cat: fake.txt: No such file or directory
+>>> new_proc
+CompletedProcess(args=['cat', 'fake.txt'], returncode=1)
+
+# In this situation, we might want to raise an error, and if we pass the check argument to the function, it will raise a subprocess.CalledProcessError if something goes wrong
+>>> error_proc = subprocess.run(['cat', 'fake.txt'], check=True)
+cat: fake.txt: No such file or directory
+Traceback (most recent call last):
+  File "", line 1, in 
+  File "/usr/local/lib/python3.6/subprocess.py", line 418, in run
+    output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cat', 'fake.txt']' returned non-zero exit status 1.
+>>>
+
+############################################
+ADVANCED ITERATION WITH LIST COMPREHENSIONS
+############################################
+
+# we need the words file to exist at /usr/share/dict/words
+# To dig into list comprehensions, we’re going to write a script that takes a word that then returns all of the values in the “words” file on our machine that contain the word. Our first step will be writing the script using standard iteration, and then we’re going to refactor our script to utilize a list comprehension.
+import argparse
+
+parser = argparse.ArgumentParser(description='Search for words including partial word')
+parser.add_argument('snippet', help='partial (or complete) string to search for in words')
+
+args = parser.parse_args()
+snippet = args.snippet.lower()
+
+with open('/usr/share/dict/words') as f:
+  words = f.readlines()
+
+matches = []
+
+for word in words:
+   if snippet in word.lower():
+       matches.append(word)
+
+print(matches)
+
+# Let’s test out
+$ chmod u+x bin/contains
+$ contains Keith
+['Keith\n', 'Keithley\n', 'Keithsburg\n', 'Keithville\n']
+
+# Utilizing a List Comprehension
+# This portion of our script is pretty standard
+words = open('/usr/share/dict/words').readlines()
+matches = []
+
+for word in words:
+   if snippet in word.lower():
+       matches.append(word)
+
+print(matches)
+
+# We can rewrite that chunk of our script as one or two lines using a list comprehension
+words = open('/usr/share/dict/words').readlines()
+print([word for word in words if snippet in word.lower()])
+
+# Final Version
+import argparse
+
+parser = argparse.ArgumentParser(description='Search for words including partial word')
+parser.add_argument('snippet', help='partial (or complete) string to search for in words')
+
+args = parser.parse_args()
+snippet = args.snippet.lower()
+
+words = open('/usr/share/dict/words').readlines()
+print([word.strip() for word in words if snippet in word.lower()])
+
+# output
+$ contains Keith
+['Keith', 'Keithley', 'Keithsburg', 'Keithville']
+
