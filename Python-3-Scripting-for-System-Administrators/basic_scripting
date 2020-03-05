@@ -1,0 +1,279 @@
+################
+READ USER INPUT
+################
+
+name = input("What is your name? ")
+birthdate = input("What is your birthdate? ")
+age = int(input("How old are you? "))
+
+print(f"{name} was born on {birthdate}")
+print(f"Half of your age is {age / 2}")
+
+################
+FUNCTION BASICS
+################
+
+# without an argument
+>>> def hello_world():
+...     print("Hello, World!")
+...
+>>> hello_world()
+Hello, World!
+>>>
+
+# If we want to define an argument we will put the variable name we want it to have within the parentheses
+>>> def print_name(name):
+...     print(f"Name is {name}")
+...
+>>> print_name("Claudio")
+Name is Claudio
+
+# Let’s try to assign the value from print_name to a variable
+# If we don’t explicitly declare a return value, then the result will be None
+>>> output = print_name("Claudio")
+Name is Claudio
+>>> output
+>>>
+
+# We can declare what we’re returning from a function using the return keyword
+>>> def add_two(num):
+...     return num + 2
+...
+>>> result = add_two(2)
+>>> result
+4
+
+###########################
+USING FUNCTIONS IN SCRIPTS
+###########################
+
+# single function that returns a tuple with the user given information
+def gather_info():
+    height = float(input("What is your height? (inches or meters) "))
+    weight = float(input("What is your weight? (pounds or kilograms) "))
+    system = input("Are your measurements in metric or imperial units? ").lower().strip()
+    return (height, weight, system)
+
+# calculate the BMI
+def calculate_bmi(weight, height, system='metric'):
+    """ # The triple-quoted is known as a “documentation string” or “doc string” 
+    Return the Body Mass Index (BMI) for the
+    given weight, height, and measurement system.
+    """
+    if system == 'metric':
+        bmi = (weight / (height ** 2))
+    else:
+        bmi = 703 * (weight / (height ** 2))
+    return bmi
+
+# Script's flow
+while True:
+    height, weight, system = gather_info()
+    if system.startswith('i'):
+        bmi = calculate_bmi(weight, system='imperial', height=height)
+        print(f"Your BMI is {bmi}")
+        break
+    elif system.startswith('m'):
+        bmi = calculate_bmi(weight, height)
+        print(f"Your BMI is {bmi}")
+        break
+    else:
+        print("Error: Unknown measurement system. Please use imperial or metric.")
+
+################################
+USING STANDARD LIBRARY PACKAGES
+################################
+
+# functions used:
+# localtime - gives us the time_struct for the current moment
+# strftime - allows us to specify how to represent the time_struct as a string.
+# mktime - converts a time_struct into a numeric value so we can calculate the time difference.
+
+# Building a Stopwatch Script
+import time
+
+start_time = time.localtime()
+print(f"Timer started at {time.strftime('%X', start_time)}")
+
+input("Press any key to stop timer ")
+
+stop_time = time.localtime()
+difference = time.mktime(stop_time) - time.mktime(start_time)
+
+print(f"Timer stopped at {time.strftime('%X', stop_time)}")
+print(f"Total time: {difference} seconds")
+
+# Importing Specifics From a Module
+# We’re only using a subset of the functions from the time package, and it’s a good practice to only import what we need. We can import a subset of a module using the from statement combined with our import
+
+from time import localtime, mktime, strftime
+
+start_time = localtime()
+print(f"Timer started at {strftime('%X', start_time)}")
+
+input("Press any key to stop timer ")
+
+stop_time = localtime()
+difference = mktime(stop_time) - mktime(start_time)
+
+print(f"Timer stopped at {strftime('%X', stop_time)}")
+print(f"Total time: {difference} seconds")
+
+###################################
+WORKING WITH ENVIRONMENT VARIABLES
+###################################
+
+import os
+
+stage = os.environ["STAGE"].upper()
+
+output = f"We're running in {stage}"
+
+if stage.startswith("PROD"):
+    output = "DANGER!!! - " + output
+
+print(output)
+
+# We can set the environment variable when we run the script to test the differences
+$ STAGE=staging running
+We're running in STAGING
+$ STAGE=production running
+DANGER!!! - We're running in PRODUCTION
+
+# What happens if the 'STAGE' environment variable isn’t set though?
+$ running
+Traceback (most recent call last):
+  File "/home/user/bin/running", line 5, in 
+    stage = os.environ["STAGE"].upper()
+  File "/usr/local/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'STAGE'
+# This potential KeyError is the biggest downfall of using os.environ, and the reason that we will usually use os.getenv
+
+# If the 'STAGE' environment variable isn’t set, then we want to default to 'DEV', and we can do that by using the os.getenv function
+import os
+
+stage = os.getenv("STAGE", "dev").upper()
+
+output = f"We're running in {stage}"
+
+if stage.startswith("PROD"):
+    output = "DANGER!!! - " + output
+
+print(output)
+
+# Now if we run our script without a 'STAGE' we won’t have an error
+$ running
+We're running in DEV
+
+#######################
+INTERACTING WITH FILES
+#######################
+
+# let’s create a text file that we can read from called xmen_base.txt
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+
+# Let’s open the xmen_base.txt file to see what a file object can do
+>>> xmen_file = open('xmen_base.txt', 'r')
+>>> xmen_file
+<_io.TextIOWrapper name='xmen_base.txt' mode='r' encoding='UTF-8'> 
+# The open function allows us to connect to our file by specifying the path and the mode. We can see that our xmen_file object is an _io.TextIOWrapper
+# documentation: https://docs.python.org/3/library/io.html#io.TextIOWrapper
+
+# read function
+>>> xmen_file.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+>>> xmen_file.read()
+''
+# read gives us all of the content as a single string, but notice that it gave us an empty string when we called the function as second time. That happens because the file maintains a cursor position and when we first called read the cursor was moved to the very end of the file’s contents
+
+# if we want to reread the file we’ll need to move the beginning of the file using the seek function
+>>> xmen_file.seek(0)
+0
+>>> xmen_file.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+>>> xmen_file.seek(6)
+6
+>>> xmen_file.read()
+'Wolverine\nCyclops\nBishop\nNightcrawler\n'
+# By seeking to a specific point of the file, we are able to get a string that only contains what is after our cursor’s location
+
+# Another way that we can read through content is by using a for loop
+# Notice that we added a custom end to our printing because we knew that there were already newline characters (\n) in each line
+>>> xmen_file.seek(0)
+0
+>>> for line in xmen_file:
+...     print(line, end="")
+...
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+>>>
+
+# Once we’re finished working with a file, it is import that we close our connection to the file using the close function
+>>> xmen_file.close()
+>>> xmen_file.read()
+Traceback (most recent call last):
+  File "", line 1, in 
+ValueError: I/O operation on closed file.
+>>>
+
+# add additional content
+# We have to reopen our previous connection to the xmen_base.txt so that we can read it again
+# We then create a connection to a file that doesn't exist yet and set the mode to w, which stands for “write”
+>>> xmen_base = open('xmen_base.txt')
+>>> new_xmen = open('new_xmen.txt', 'w')
+
+# The opposite of the read function is the write function, and we can use both of those to populate our new file
+>>> new_xmen.write(xmen_base.read())
+>>> new_xmen.close()
+>>> new_xmen = open(new_xmen.name, 'r+')
+>>> new_xmen.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+# We read from the base file and used the return value as the argument to write for our new file
+# We closed the new file
+# We reopened the new file, using the r+ mode which will allow us to read and write content to the file
+# We read the content from the new file to ensure that it wrote properly
+
+# let’s add some more names
+>>> new_xmen.seek(0)
+>>> new_xmen.write("Beast\n")
+6
+>>> new_xmen.write("Phoenix\n")
+8
+>>> new_xmen.seek(0)
+0
+>>> new_xmen.read()
+'Beast\nPhoenix\ne\nCyclops\nBishop\nNightcrawler\n'
+# Since we are using the r+ we are overwriting the file on a per character basis since we used seek to go back to the beginning of the file. If we reopen the file in the w mode, the pre-existing contents will be truncated
+
+# A fairly common thing to want to do is to append to a file without reading its current contents. This can be done with the a mode. Let’s close the xmen_base.txt file and reopen it in the a mode to add another name without worrying about losing our original content. This time, we’re going to use the with statement to temporarily open the file and have it automatically closed after our code block has executed
+>>> xmen_file.close()
+>>> with open('xmen_base.txt', 'a') as f:
+...     f.write('Professor Xavier\n')
+...
+17
+>>> f = open('xmen_base.txt', 'a')
+>>> with f:
+...     f.write("Something\n")
+...
+10
+>>> exit()
+$ cat xmen_base.txt
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+Professor Xavier
+Something
+
+
+
+
