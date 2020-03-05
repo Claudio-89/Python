@@ -1,0 +1,1499 @@
+########
+STRINGS
+########
+
+>>> "pass" + "word"
+'password'
+>>> "Ha" * 4
+'HaHaHaHa'
+>>> "double".find('s')
+-1
+>>> "double".find('u')
+2
+>>> "double".find('bl')
+3
+>>> "TeStInG".lower()
+'testing'
+>>> "PassWord123".lower()
+'password123'
+>>> print("Tab\tDelimited")
+Tab	Delimited
+>>> print("New\nLine")
+New
+Line
+>>> print("Slash\\Character")
+Slash\Character
+>>> print("'Single' in Double")
+'Single' in Double
+>>> print('"Double" in Single')
+"Double" in Single
+>>> print("\"Double\" in Double")
+"Double" in Double
+
+########################
+NUMBERS (int and float)
+########################
+
+>>> 2 + 2 # Addition
+4
+>>> 10 - 4 # Subtraction
+6
+>>> 3 * 9 # Multiplication
+27
+>>> 5 / 3 # Division
+1.66666666666667
+>>> 5 // 3 # Floor division, always returns a number without a remainder
+1
+>>> 8 % 3 # Modulo division, returns the remainder
+2
+>>> 2 ** 3 # Exponent (2*2*2)
+8
+
+For strings and numbers, we can use the str, int, and float functions to convert from one type to another
+
+>>> str(1.1)
+'1.1'
+>>> int("10")
+10
+>>> int(5.99999)
+5
+>>> float("5.6")
+5.6
+>>> float(5)
+5.0
+
+You’ll run into issues trying to convert strings to other types if they aren’t present in the string
+
+>>> float("1.1 things")
+Traceback (most recent call last):
+  File "", line 1, in 
+ValueError: could not convert string to float: '1.1 things'
+
+###################
+ BOOLEANS and NONE
+###################
+
+Python has two boolean constants: True and False
+
+>>> True
+True
+>>> type(True)
+<class 'bool'>
+>>> False
+False
+>>> type(False)
+<class 'bool'>
+>>> bool({})
+False
+>>> bool("")
+False
+>>> bool("Claudio")
+True
+>>> None # The constant used to represent nothingness in Python is None. None is a “falsy”, and we’ll often use it to represent when a variable has no value yet.
+
+##########
+VARIABLES
+##########
+
+>>> my_str = "simple string"
+>>> my_str
+'simple string'
+>>> print(my_str)
+simple string
+>>> my_str += " testing"
+>>> my_str
+'simple string testing'
+>>> my_str = my_str + " testing2"
+>>> my_str
+'simple string testing testing2'
+
+######
+LISTS 
+######
+
+>>> my_list = [1, 2, 3, 4, 5]
+>>> my_list
+[1, 2, 3, 4, 5]
+>>> [1, 'a', True]
+[1, 'a', True]
+>>> my_list[0]
+1
+>>> len(my_list)
+5
+>>> my_list[-1]
+5
+>>> my_list[-4]
+2
+>>> my_list[0:2]
+[1, 2]
+>>> my_list[1:]
+[2, 3, 4, 5]
+>>> my_list[0::1]
+[1, 2, 3, 4, 5]
+>>> my_list[0::2]
+[1, 3, 5]
+>>> my_list[0] = "a"
+>>> my_list
+['a', 2, 3, 4, 5]
+>>> my_list.append(6)
+>>> my_list.append(7)
+>>> my_list
+['a', 2, 3, 4, 5, 6, 7]
+>>> my_list + [8, 9, 10]
+['a', 2, 3, 4, 5, 6, 7, 8, 9, 10]
+>>> my_list
+['a', 2, 3, 4, 5, 6, 7]
+>>> my_list += [8, 9, 10]
+>>> my_list
+['a', 2, 3, 4, 5, 6, 7, 8, 9, 10]
+>>> my_list[1:3] = ['b', 'c']
+>>> my_list
+['a', 'b', 'c', 4, 5, 6, 7, 8, 9, 10]
+>>> my_list[3:5] = ['d', 'e', 'f']
+>>> my_list
+['a', 'b', 'c', 'd', 'e', 'f', 6, 7, 8, 9, 10]
+>>> my_list = ['a', 'b', 'c', 'd', 5, 6, 7]
+>>> my_list[4:] = []
+>>> my_list
+['a', 'b', 'c', 'd']
+>>> my_list.remove('b')
+>>> my_list
+['a', 'c', 'd']
+>>> my_list.pop()
+'d'
+>>> my_list
+['a', 'c']
+>>> my_list.pop(0)
+'a'
+>>> my_list
+['c']
+>>>
+
+#######
+TUPLES
+#######
+
+Tuples are a fixed width, immutable sequence type. We create tuples using parenthesis ( and ) and at least one comma (,)
+
+>>> point = (2.0, 3.0)
+>>> point_3d = point + (4.0,)
+>>> point_3d
+(2.0, 3.0, 4.0)
+>>> x, y, z = point_3d
+>>> x
+2.0
+>>> y
+3.0
+>>> z
+4.0
+>>>
+
+#####################
+DICTIONARIES (DICTS)
+#####################
+
+>>> ages = { 'kevin': 59, 'alex': 29, 'bob': 40 }
+>>> ages
+{'alex': 29, 'kevin': 59, 'bob': 40}
+>>> ages['kevin']
+59
+>>> ages['kayla'] = 21
+>>> ages
+{'alex': 29, 'kevin': 59, 'bob': 40, 'kayla': 21}
+>>> ages['kayla'] = 22 # Keys are unique
+>>> ages
+{'alex': 29, 'kevin': 59, 'bob': 40, 'kayla': 22}
+>>> del ages['kevin']
+>>> ages
+{'alex': 29, 'bob': 40, 'kayla': 22}
+>>> del ages
+>>> ages
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'ages' is not defined
+>>> ages = { 'kevin': 59, 'alex': 29, 'bob': 40 }
+>>> ages.pop('alex')
+29
+>>> ages
+{'kevin': 59, 'bob': 40}
+>>> ages.keys()
+dict_keys(['kevin', 'bob'])
+>>> list(ages.keys())
+['kevin', 'bob']
+>>> ages.values()
+dict_values([59, 40])
+>>> list(ages.values())
+[59, 40]
+>>> weights = dict(kevin=160, bob=240, kayla=135)
+>>> weights
+{'kevin': 160, 'kayla': 135, 'bob': 240}
+>>> colors = dict([('kevin', 'blue'), ('bob', 'green'), ('kayla', 'red')])
+>>> colors
+{'kevin': 'blue', 'bob': 'green', 'kayla': 'red'}
+
+#############################
+CONDITIONALS AND COMPARISONS
+#############################
+
+Comparisons
+
+There are some standard comparison operators that we’ll use that match pretty closely to those used in mathematical equations
+
+>>> 1 < 2
+True
+>>> 0 > 2
+False
+>>> 2 == 1
+False
+>>> 2 != 1
+True
+>>> 3.0 >= 3.0
+True
+>>> 3.1 <= 3.0
+False
+
+If we try to make comparisons of types that don’t match up, we will run into errors
+
+>>> 3.1 <= "this"
+Traceback (most recent call last):
+  File "", line 1, in 
+TypeError: '<=' not supported between instances of 'float' and 'str'
+>>> 3 <= 3.1
+True
+>>> 1.1 == "1.1"
+False
+>>> 1.1 == float("1.1")
+True
+
+We can compare more than just numbers. Here’s what it looks like when we compare strings
+
+Notice that the string 'b' is considered greater than the strings 'a' and 'abc'. The characters are compared one at a time alphabetically to determine which is greater. This concept is used to sort strings alphabetically.
+
+>>> "this" == "this"
+True
+>>> "this" == "This"
+False
+>>> "b" > "a"
+True
+>>> "abc" < "b"
+True
+
+We often get lists of information that we need to ensure contains (or doesn’t contain) a specific item. To make this check in Python, we’ll use the in and not in operations
+
+>>> 2 in [1, 2, 3]
+True
+>>> 4 in [1, 2, 3]
+False
+>>> 2 not in [1, 2, 3]
+False
+>>> 4 not in [1, 2, 3]
+True
+
+if/elif/else
+
+>>> if True:
+...     print("Was True")
+...
+Was True
+>>> if False:
+...     print("Was True")
+...
+>>>
+
+To add an alternative code path, we’ll use the else keyword, followed by a colon (:), and indenting the code underneath
+
+>>> if False:
+...     print("Was True")
+... else:
+...     print("Was False")
+...
+Was False
+
+In the even that we want to check multiple potential conditions we can use the elif CONDITION: statement
+Notice that we fell into the first elif statement’s block and then the second elif block was never executed even though it was true. We can only exercise one branch in an if statement
+
+>>> name = "Kevin"
+>>> if len(name) >= 6:
+...     print("name is long")
+... elif len(name) == 5:
+...     print("name is 5 characters")
+... elif len(name) >= 4:
+...     print("name is 4 or more")
+... else:
+...     print("name is short")
+...
+name is 5 characters
+
+###########
+WHILE LOOP 
+###########
+
+The most basic type of loop that we have at our disposal is the while loop. This type of loop repeats itself based on a condition that we pass to it.
+
+Infinite loop
+
+>>> while True:
+...     print("looping")
+...
+looping
+looping
+looping
+looping
+
+while loop where we modify something about the condition on each iteration
+
+>>> count = 1
+>>> while count <= 4:
+...     print("looping")
+...     count += 1
+...
+looping
+looping
+looping
+looping
+>>>
+
+Continue  keywords
+
+>>> count = 0
+>>> while count < 10:
+...     if count % 2 == 0:
+...         count += 1
+...         continue
+...     print(f"We're counting odd numbers: {count}")
+...     count += 1
+...
+We're counting odd numbers: 1
+We're counting odd numbers: 3
+We're counting odd numbers: 5
+We're counting odd numbers: 7
+We're counting odd numbers: 9
+>>>
+
+break keywords
+
+>>> count = 1
+>>> while count < 10:
+...     if count % 2 == 0:
+...         break
+...     print(f"We're counting odd numbers: {count}")
+...     count += 1
+...
+We're counting odd numbers: 1
+
+#########
+FOR LOOP
+#########
+ 
+The most common use we have for looping is when we want to execute some code for each item in a sequence. For this type of looping or iteration, we’ll use the for loop. The general structure for a for loop is:
+
+for TEMP_VAR in SEQUENCE:
+    pass
+
+The TEMP_VAR will be populated with each item as we iterate through the SEQUENCE and it will be available to us in the context of the loop. After the loop finishes one iteration, then the TEMP_VAR will be populated with the next item in the SEQUENCE, and the loop’s body will execute again. This process continues until we either hit a break statement or we’ve iterated over every item in the SEQUENCE. Here’s an example looping over a list of colors:
+
+>>> colors = ['blue', 'green', 'red', 'purple']
+>>> for color in colors:
+...     print(color)
+...
+blue
+green
+red
+purple
+>>> color
+'purple'
+
+If we didn't want to print out certain colors we could utilize the continue or break statements again. Let’s say we want to skip the string 'blue' and terminate the loop if we see the string 'red':
+
+>>> colors = ['blue', 'green', 'red', 'purple']
+>>> for color in colors:
+...     if color == 'blue':
+...         continue
+...     elif color == 'red':
+...         break
+...     print(color)
+...
+green
+>>>
+
+Lists will be the most common type that we iterate over using a for loop, but we can also iterate over other sequence types. Of the types we already know, we can iterate over strings, dictionaries, and tuples.
+
+>>> point = (2.1, 3.2, 7.6)
+>>> for value in point:
+...     print(value)
+...
+2.1
+3.2
+7.6
+>>>
+
+A dictionary example:
+
+>>> ages = {'kevin': 59, 'bob': 40, 'kayla': 21}
+>>> for key in ages:
+...     print(key)
+...
+kevin
+bob
+kayla
+
+A string example:
+
+>>> for letter in "my_string":
+...     print(letter)
+...
+m
+y
+_
+s
+t
+r
+i
+n
+g
+>>>
+
+Unpacking Multiple Items in a for Loop
+
+>>> list_of_points = [(1, 2), (2, 3), (3, 4)]
+>>> for x, y in list_of_points:
+...     print(f"x: {x}, y: {y}")
+...
+x: 1, y: 2
+x: 2, y: 3
+x: 3, y: 4
+
+>>> for name, age in ages.items():
+...     print(f"Person Named: {name}")
+...     print(f"Age of: {age}")
+...
+Person Named: kevin
+Age of: 59
+Person Named: bob
+Age of: 40
+Person Named: kayla
+Age of: 21
+
+#################
+LOGIC OPERATIONS
+#################
+
+NOT operation - empty string is a “falsy” value, so not "" will always return True
+
+>>> name = ""
+>>> not name
+True
+>>> if not name:
+...     print("No name given")
+...
+>>>
+
+OR operation
+
+>>> first = ""
+>>> last = "Thompson"
+>>> if first or last:
+...     print("The user has a first or last name")
+...
+The user has a first or last name
+>>>
+
+If both first and last were “falsy” then the print would never happen
+
+>>> first = ""
+>>> last = ""
+>>> if first or last:
+...     print("The user has a first or last name")
+...
+>>>
+
+Another feature of OR is that we can use it to set default values for variables
+
+>>> last = ""
+>>> last_name = last or "Doe"
+>>> last_name
+'Doe'
+>>>
+
+OR operation will return the first value that is “truthy” or the last value in the chain
+
+>>> 0 or 1
+1
+>>> 1 or 2
+1
+
+AND operation - which requires both conditions to be True
+
+>>> first = "Claudio"
+>>> last = ""
+>>> if first and last:
+...     print(f"Full name: {first} {last}")
+... elif first:
+...     print(f"First name: {first}")
+... elif last:
+...     print(f"Last name: {last}")
+...
+First name: Claudio
+>>>
+
+Same thing with both first and last
+
+>>> first = "Claudio"
+>>> last = "A"
+>>> if first and last:
+...     print(f"Full name: {first} {last}")
+... elif first:
+...     print(f"First name: {first}")
+... elif last:
+...     print(f"Last name: {last}")
+...
+Full name: Claudio A
+>>>
+
+AND operation will return the first value that is “falsy” or the last value in the chain
+
+>>> 0 and 1
+0
+>>> 1 and 2
+2
+>>> (1 == 1) and print("Something")
+Something
+>>> (1 == 2) and print("Something")
+False
+
+################
+READ USER INPUT
+################
+
+name = input("What is your name? ")
+birthdate = input("What is your birthdate? ")
+age = int(input("How old are you? "))
+
+print(f"{name} was born on {birthdate}")
+print(f"Half of your age is {age / 2}")
+
+################
+FUNCTION BASICS
+################
+
+Without an argument
+
+>>> def hello_world():
+...     print("Hello, World!")
+...
+>>> hello_world()
+Hello, World!
+>>>
+
+If we want to define an argument we will put the variable name we want it to have within the parentheses
+
+>>> def print_name(name):
+...     print(f"Name is {name}")
+...
+>>> print_name("Claudio")
+Name is Claudio
+
+Let’s try to assign the value from print_name to a variable
+
+If we don’t explicitly declare a return value, then the result will be None
+
+>>> output = print_name("Claudio")
+Name is Claudio
+>>> output
+>>>
+
+We can declare what we’re returning from a function using the return keyword
+
+>>> def add_two(num):
+...     return num + 2
+...
+>>> result = add_two(2)
+>>> result
+4
+
+###########################
+USING FUNCTIONS IN SCRIPTS
+###########################
+
+Single function that returns a tuple with the user given information
+
+def gather_info():
+    height = float(input("What is your height? (inches or meters) "))
+    weight = float(input("What is your weight? (pounds or kilograms) "))
+    system = input("Are your measurements in metric or imperial units? ").lower().strip()
+    return (height, weight, system)
+
+Calculate the BMI
+
+def calculate_bmi(weight, height, system='metric'):
+    """ # The triple-quoted is known as a “documentation string” or “doc string” 
+    Return the Body Mass Index (BMI) for the
+    given weight, height, and measurement system.
+    """
+    if system == 'metric':
+        bmi = (weight / (height ** 2))
+    else:
+        bmi = 703 * (weight / (height ** 2))
+    return bmi
+
+Script's flow
+
+while True:
+    height, weight, system = gather_info()
+    if system.startswith('i'):
+        bmi = calculate_bmi(weight, system='imperial', height=height)
+        print(f"Your BMI is {bmi}")
+        break
+    elif system.startswith('m'):
+        bmi = calculate_bmi(weight, height)
+        print(f"Your BMI is {bmi}")
+        break
+    else:
+        print("Error: Unknown measurement system. Please use imperial or metric.")
+
+################################
+USING STANDARD LIBRARY PACKAGES
+################################
+
+Functions used:
+
+localtime - gives us the time_struct for the current moment
+
+strftime - allows us to specify how to represent the time_struct as a string.
+
+mktime - converts a time_struct into a numeric value so we can calculate the time difference.
+
+Building a Stopwatch Script
+
+import time
+
+start_time = time.localtime()
+print(f"Timer started at {time.strftime('%X', start_time)}")
+
+input("Press any key to stop timer ")
+
+stop_time = time.localtime()
+difference = time.mktime(stop_time) - time.mktime(start_time)
+
+print(f"Timer stopped at {time.strftime('%X', stop_time)}")
+print(f"Total time: {difference} seconds")
+
+Importing Specifics From a Module
+
+We’re only using a subset of the functions from the time package, and it’s a good practice to only import what we need. We can import a subset of a module using the from statement combined with our import
+
+from time import localtime, mktime, strftime
+
+start_time = localtime()
+print(f"Timer started at {strftime('%X', start_time)}")
+
+input("Press any key to stop timer ")
+
+stop_time = localtime()
+difference = mktime(stop_time) - mktime(start_time)
+
+print(f"Timer stopped at {strftime('%X', stop_time)}")
+print(f"Total time: {difference} seconds")
+
+###################################
+WORKING WITH ENVIRONMENT VARIABLES
+###################################
+
+import os
+
+stage = os.environ["STAGE"].upper()
+
+output = f"We're running in {stage}"
+
+if stage.startswith("PROD"):
+    output = "DANGER!!! - " + output
+
+print(output)
+
+We can set the environment variable when we run the script to test the differences
+
+$ STAGE=staging running
+We're running in STAGING
+$ STAGE=production running
+DANGER!!! - We're running in PRODUCTION
+
+What happens if the 'STAGE' environment variable isn’t set though?
+
+$ running
+Traceback (most recent call last):
+  File "/home/user/bin/running", line 5, in 
+    stage = os.environ["STAGE"].upper()
+  File "/usr/local/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'STAGE'
+
+This potential KeyError is the biggest downfall of using os.environ, and the reason that we will usually use os.getenv
+
+If the 'STAGE' environment variable isn’t set, then we want to default to 'DEV', and we can do that by using the os.getenv function
+
+import os
+
+stage = os.getenv("STAGE", "dev").upper()
+
+output = f"We're running in {stage}"
+
+if stage.startswith("PROD"):
+    output = "DANGER!!! - " + output
+
+print(output)
+
+Now if we run our script without a 'STAGE' we won’t have an error
+
+$ running
+We're running in DEV
+
+#######################
+INTERACTING WITH FILES
+#######################
+
+Let’s create a text file that we can read from called xmen_base.txt
+
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+
+Let’s open the xmen_base.txt file to see what a file object can do
+
+>>> xmen_file = open('xmen_base.txt', 'r')
+>>> xmen_file
+<_io.TextIOWrapper name='xmen_base.txt' mode='r' encoding='UTF-8'> 
+
+The open function allows us to connect to our file by specifying the path and the mode. We can see that our xmen_file object is an _io.TextIOWrapper
+Documentation: https://docs.python.org/3/library/io.html#io.TextIOWrapper
+
+read function
+
+>>> xmen_file.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+>>> xmen_file.read()
+''
+
+read gives us all of the content as a single string, but notice that it gave us an empty string when we called the function as second time. That happens because the file maintains a cursor position and when we first called read the cursor was moved to the very end of the file’s contents
+
+If we want to reread the file we’ll need to move the beginning of the file using the seek function
+
+>>> xmen_file.seek(0)
+0
+>>> xmen_file.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+>>> xmen_file.seek(6)
+6
+>>> xmen_file.read()
+'Wolverine\nCyclops\nBishop\nNightcrawler\n'
+
+By seeking to a specific point of the file, we are able to get a string that only contains what is after our cursor’s location
+
+Another way that we can read through content is by using a for loop
+
+Notice that we added a custom end to our printing because we knew that there were already newline characters (\n) in each line
+
+>>> xmen_file.seek(0)
+0
+>>> for line in xmen_file:
+...     print(line, end="")
+...
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+>>>
+
+Once we’re finished working with a file, it is import that we close our connection to the file using the close function
+
+>>> xmen_file.close()
+>>> xmen_file.read()
+Traceback (most recent call last):
+  File "", line 1, in 
+ValueError: I/O operation on closed file.
+>>>
+
+Add additional content
+
+We have to reopen our previous connection to the xmen_base.txt so that we can read it again
+
+We then create a connection to a file that doesn't exist yet and set the mode to w, which stands for “write”
+
+>>> xmen_base = open('xmen_base.txt')
+>>> new_xmen = open('new_xmen.txt', 'w')
+
+The opposite of the read function is the write function, and we can use both of those to populate our new file
+
+>>> new_xmen.write(xmen_base.read())
+>>> new_xmen.close()
+>>> new_xmen = open(new_xmen.name, 'r+')
+>>> new_xmen.read()
+'Storm\nWolverine\nCyclops\nBishop\nNightcrawler\n'
+
+We read from the base file and used the return value as the argument to write for our new file
+
+We closed the new file
+
+We reopened the new file, using the r+ mode which will allow us to read and write content to the file
+
+We read the content from the new file to ensure that it wrote properly
+
+Let’s add some more names
+
+>>> new_xmen.seek(0)
+>>> new_xmen.write("Beast\n")
+6
+>>> new_xmen.write("Phoenix\n")
+8
+>>> new_xmen.seek(0)
+0
+>>> new_xmen.read()
+'Beast\nPhoenix\ne\nCyclops\nBishop\nNightcrawler\n'
+
+Since we are using the r+ we are overwriting the file on a per character basis since we used seek to go back to the beginning of the file. If we reopenthe file in the w mode, the pre-existing contents will be truncated
+
+A fairly common thing to want to do is to append to a file without reading its current contents. This can be done with the a mode. Let’s close the xmen_base.txt file and reopen it in the a mode to add another name without worrying about losing our original content. This time, we’re going to use the with statement to temporarily open the file and have it automatically closed after our code block has executed
+
+>>> xmen_file.close()
+>>> with open('xmen_base.txt', 'a') as f:
+...     f.write('Professor Xavier\n')
+...
+17
+>>> f = open('xmen_base.txt', 'a')
+>>> with f:
+...     f.write("Something\n")
+...
+10
+>>> exit()
+$ cat xmen_base.txt
+Storm
+Wolverine
+Cyclops
+Bishop
+Nightcrawler
+Professor Xavier
+Something
+
+
+
+
+################################
+PARSING COMMAND LINE PARAMETERS
+################################
+
+Most of the scripts and utilities that we work with accept positional arguments instead of prompting us for information after we’ve run the command. The simplest way for us to do this in Python is to use the sys module’s argv attribute. Let’s try this out by writing a small script that echoes our first argument back to us
+
+~/bin/param_echo
+import sys
+
+print(f"First argument {sys.argv[0]}")
+
+After we make this executable and give it a shot, we see that the first argument is the script itself
+
+$ chmod u+x ~/bin/param_echo
+$ param_echo testing
+First argument /home/user/bin/param_echo
+
+That’s not quite what we wanted, but now we know that argv will contain the script and we’ll need to get the index of 1 for our first argument. Let’s adjust our script to echo all of the arguments except the script name and then echo the first positional argument by itself
+
+~/bin/param_echo
+import sys
+
+print(f"Positional arguments: {sys.argv[1:]}")
+print(f"First argument: {sys.argv[1]}")
+
+We get a much different result now
+
+$ param_echo testing
+Positional arguments: ['testing']
+First argument: testing
+$ param_echo testing testing12 'another argument'
+Positional arguments: ['testing', 'testing12', 'another argument']
+First argument: testing
+$ param_echo
+Positional arguments: []
+Traceback (most recent call last):
+  File "/home/user/bin/param_echo", line 6, in 
+    print(f"First argument: {sys.argv[1]}")
+IndexError: list index out of range
+
+This shows us a few things about working with argv
+
+Positional arguments are based on spaces unless we explicitly wrap the argument in quotes
+
+We can get a slice of the first index and after without worrying about it being empty
+
+We risk an IndexError if we assume that there will be an argument for a specific position and one isn’t given
+
+Using sys.argv is the simplest way to allow our scripts to accept positional arguments
+
+#####################################
+ROBUST CLIS WITH 'ARGPARSE' - PART 1
+#####################################
+
+The tool that we’re going to build will need to do the following:
+
+1. Require a filename argument, so it knows what file to read.
+2. Print the contents of the file backward (bottom of the script first, each line printed backward)
+3. Provide help text and documentation when it receives the --help flag.
+4. Accept an optional --limit or -l flag to specify how many lines to read from the file.
+5. Accept a --version flag to print out the current version of the tool.
+
+Building an ArgumentParser with our required argument
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('filename', help='the file to read')
+args = parser.parse_args()
+print(args)
+
+$ chmod u+x ~/bin/reverse-file
+$ reverse-file
+usage: reverse-file [-h] filename
+reverse-file: error: the following arguments are required: filename
+
+Since filename is required and wasn’t given the ArgumentParser object recognized the problem and returned a useful error message
+
+reverse-file -h
+usage: reverse-file [-h] filename
+
+positional arguments:
+  filename    the file to read
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+We need to add a --limit flag with a -l alias
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+
+args = parser.parse_args()
+print(args)
+
+To specify that an argument is a flag, we need to place two hyphens at the beginning of the flag’s name. We’ve used the type option for add_argument tostate that we want the value converted to an integer, and we specified a shorter version of the flag as our second argument
+
+Next, we’ll add a --version flag. This one will be a little different because we’re going to use the action option to specify a string to print out when this flag is received
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s 1.0')
+
+args = parser.parse_args()
+print(args)
+
+This uses a built-in action type of version which we’ve found in the documentation
+
+$ reverse-file --version
+reverse-file 1.0
+
+
+######################################
+ROBUST CLIS WITH 'ARGPARSE' - PART 2
+######################################
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s 1.0')
+
+args = parser.parse_args()
+
+with open(args.filename) as f:
+    lines = f.readlines()
+    lines.reverse()
+
+    if args.limit:
+        lines = lines[:args.limit]
+
+    for line in lines:
+        print(line.strip()[::-1])
+
+$ reverse-file xmen_base.txt
+gnihtemoS
+reivaX rosseforP
+relwarcthgiN
+pohsiB
+spolcyC
+enirevloW
+mrotS
+
+$ reverse-file -l 2 xmen_base.txt
+gnihtemoS
+reivaX rosseforP
+
+#############################################
+HANDLING ERRORS WITH TRY/EXCEPT/ELSE/FINALLY
+#############################################
+
+In our reverse-file script, what happens if the filename doesn’t exist?
+
+$ reverse-file fake.txt
+Traceback (most recent call last):
+  File "/home/user/bin/reverse-file", line 11, in 
+    with open(args.filename) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'fake.txt'
+
+This FileNotFoundError is something that we can expect to happen quite often and our script should handle this situation
+
+To handle these errors we’re going to utilize the keywords try, except, and else
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s verison 1.0')
+
+args = parser.parse_args()
+
+try:
+    f = open(args.filename)
+    limit = args.limit
+except FileNotFoundError as err:
+    print(f"Error: {err}")
+else:
+    with f:
+        lines = f.readlines()
+        lines.reverse()
+
+        if limit:
+            lines = lines[:limit]
+
+        for line in lines:
+            print(line.strip()[::-1])
+
+We utilize the try statement to denote that it’s quite possible for an error to happen within it. From there we can handle specific types of errors using the except keyword (we can have more than one). In the event that there isn’t an error, then we want to carry out the code that is in the else block. If we want to execute some code regardless of there being an error or not, we can put that in a finally block at the very end of our t, except for workflow
+
+$ reverse-file fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+
+############
+EXIT STATUS
+############
+
+When our reverse-file script receives a file that doesn’t exist, we show an error message, but we don’t set the exit status to 1 to be indicative of an error.
+$ reverse-file -l 2 fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+~ $ echo $?
+0
+
+Let’s use the sys.exit function to accomplish this
+
+import argparse
+import sys
+
+parser = argparse.ArgumentParser(description='Read a file in reverse')
+parser.add_argument('filename', help='the file to read')
+parser.add_argument('--limit', '-l', type=int, help='the number of lines to read')
+parser.add_argument('--version', '-v', action='version', version='%(prog)s verison 1.0')
+
+args = parser.parse_args()
+
+try:
+    f = open(args.filename)
+    limit = args.limit
+except FileNotFoundError as err:
+    print(f"Error: {err}")
+    sys.exit(1)
+else:
+    with f:
+        lines = f.readlines()
+        lines.reverse()
+
+        if limit:
+            lines = lines[:limit]
+
+        for line in lines:
+            print(line.strip()[::-1])
+
+Now, if we try our script with a missing file, we will exit with the proper code
+
+$ reverse-file -l 2 fake.txt
+Error: [Errno 2] No such file or directory: 'fake.txt'
+$ echo $?
+1
+
+###################################
+EXECUTE SHELL COMMANDS FROM PYTHON
+###################################
+
+Sometimes when we’re scripting, we need to call a separate shell command. Not every tool is written in python, but we can still interact with the userland API of other tools
+
+Executing Shell Commands With subprocess.run
+
+>>> import subprocess
+>>> proc = subprocess.run(['ls', '-l'])
+total 20
+drwxrwxr-x. 2 user user  54 Jan 28 15:36 bin
+drwxr-xr-x. 2 user user   6 Jan  7  2015 Desktop
+-rw-rw-r--. 1 user user  44 Jan 26 22:16 new_xmen.txt
+-rw-rw-r--. 1 user user  98 Jan 26 21:39 read_file.py
+-rw-rw-r--. 1 user user 431 Aug  6  2015 VNCHOWTO
+-rw-rw-r--. 1 user user  61 Jan 28 14:11 xmen_base.txt
+-rw-------. 1 user user  68 Mar 18  2016 xrdp-chansrv.log
+>>> proc
+CompletedProcess(args=['ls', '-l'], returncode=0)
+
+Intentionally Raising Errors
+The subprocess.run function will not raise an error by default if you execute something that returns a non-zero exit status
+
+>>> new_proc = subprocess.run(['cat', 'fake.txt'])
+cat: fake.txt: No such file or directory
+>>> new_proc
+CompletedProcess(args=['cat', 'fake.txt'], returncode=1)
+
+In this situation, we might want to raise an error, and if we pass the check argument to the function, it will raise a subprocess.CalledProcessError if something goes wrong
+
+>>> error_proc = subprocess.run(['cat', 'fake.txt'], check=True)
+cat: fake.txt: No such file or directory
+Traceback (most recent call last):
+  File "", line 1, in 
+  File "/usr/local/lib/python3.6/subprocess.py", line 418, in run
+    output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cat', 'fake.txt']' returned non-zero exit status 1.
+>>>
+
+############################################
+ADVANCED ITERATION WITH LIST COMPREHENSIONS
+############################################
+
+We need the words file to exist at /usr/share/dict/words
+
+To dig into list comprehensions, we’re going to write a script that takes a word that then returns all of the values in the “words” file on our machine that contain the word. Our first step will be writing the script using standard iteration, and then we’re going to refactor our script to utilize a list comprehension.
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Search for words including partial word')
+parser.add_argument('snippet', help='partial (or complete) string to search for in words')
+
+args = parser.parse_args()
+snippet = args.snippet.lower()
+
+with open('/usr/share/dict/words') as f:
+  words = f.readlines()
+
+matches = []
+
+for word in words:
+   if snippet in word.lower():
+       matches.append(word)
+
+print(matches)
+
+Let’s test out
+
+$ chmod u+x bin/contains
+$ contains Keith
+['Keith\n', 'Keithley\n', 'Keithsburg\n', 'Keithville\n']
+
+Utilizing a List Comprehension
+
+This portion of our script is pretty standard
+
+words = open('/usr/share/dict/words').readlines()
+matches = []
+
+for word in words:
+   if snippet in word.lower():
+       matches.append(word)
+
+print(matches)
+
+We can rewrite that chunk of our script as one or two lines using a list comprehension
+
+words = open('/usr/share/dict/words').readlines()
+print([word for word in words if snippet in word.lower()])
+
+Final Version
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Search for words including partial word')
+parser.add_argument('snippet', help='partial (or complete) string to search for in words')
+
+args = parser.parse_args()
+snippet = args.snippet.lower()
+
+words = open('/usr/share/dict/words').readlines()
+print([word.strip() for word in words if snippet in word.lower()])
+
+Output:
+
+$ contains Keith
+['Keith', 'Keithley', 'Keithsburg', 'Keithville']
+
+#################################
+Useful Standard Library Packages
+#################################
+
+random & json
+
+Generating Random Test Data
+
+To write our receipt reconciliation tool, we need to have some receipts to work with as we’re testing out our implementation. We’re expecting receipts to be JSON files that contain some specific data and we’re going to write a script that will create some receipts for us.
+
+We’re working on a system that requires some local paths, so let’s put what we’re doing in a receipts directory:
+
+$ mkdir -p receipts/new
+$ cd receipts
+
+The receipts that haven’t been reconciled will go in the new directory, so we’ve already created that. Let’s create a gen_receipts.py file to create some unreconciled receipts when we run it:
+
+~/receipts/gen_receipts.py
+
+import random
+import os
+import json
+
+count = int(os.getenv("FILE_COUNT") or 100)
+words = [word.strip() for word in open('/usr/share/dict/words').readlines()]
+
+for identifier in range(count):
+    amount = random.uniform(1.0, 1000)
+    content = {
+        'topic': random.choice(words),
+        'value': "%.2f" % amount
+    }
+    with open(f'./new/receipt-{identifier}.json', 'w') as f:
+        json.dump(content, f)
+
+We’re using the json.dump function to ensure that we’re writing out valid JSON.
+random.choice allows us to select one item from an iterable (str, tuple, or list). The function random.uniform gives us a float between the two bounds specified. This code does show us how to create a range, which takes a starting number and an ending number and can be iterated through the values between.
+
+Now we can run our script using the python3.6 command:
+
+$ FILE_COUNT=10 python3.6 gen_receipts.py
+$ ls new/
+receipt-0.json  receipt-2.json  receipt-4.json  receipt-6.json  receipt-8.json
+receipt-1.json  receipt-3.json  receipt-5.json  receipt-7.json  receipt-9.json
+$ cat new/receipt-0.json
+{"topic": "microceratous", "value": "918.67"}
+
+shutil & glob
+
+Creating a Directory If It Doesn’t Exist
+
+Before we start doing anything with the receipts, we want to have a processed directory to move them to so that we don’t try to process the same receipt twice. Our script can be smart enough to create this directory for us if it doesn’t exist when we first run the script. We’ll use the os.mkdir function; if the directory already exists we can catch the OSError that is thrown:
+
+~/receipts/process_receipts.py
+
+import os
+try:
+
+os.mkdir("./processed")
+
+except OSError:
+
+print("'processed' directory already exists")
+
+Collecting the Receipts to Process
+
+From the shell, we’re able to collect files based on patterns, and that’s useful. For our purposes, we want to get every receipt from the new directory that matches this pattern:
+
+receipt-[0-9]*.json
+
+That pattern translates to receipt-, followed by any number of digits, and ending with a .json file extension. We can achieve this exact result using the glob.glob function.
+
+~/receipts/process_receipts.py (partial)
+
+receipts = glob.glob('./new/receipt-[0-9]*.json')
+subtotal = 0.0
+
+Part of processing the receipts will entail adding up all of the values, so we’re going to start our script with a subtotal of 0.0
+
+Reading JSON, Totaling Values, and Moving Files
+
+The remainder of our script is going to require us to do the following:
+
+Iterate over the receipts
+Reading each receipt’s JSON
+Totaling the value of the receipts
+Moving each receipt file to the processed directory after we’re finished with it
+
+We used the json.dump function to write out a JSON file, and we can use the opposite function json.load to read a JSON file. The contents of the file will be turned into a dictionary that we can us to access its keys. We’ll add the value to the subtotal before finally moving the file using shutil.move. Here’s our final script:
+
+~/receipts/process_receipts.py
+import glob
+import os
+import shutil
+import json
+try:
+
+os.mkdir("./processed")
+
+except OSError:
+
+print("'processed' directory already exists")
+
+
+# Get a list of receipts
+
+receipts = glob.glob('./new/receipt-[0-9]*.json')
+
+subtotal = 0.0
+
+
+for path in receipts:
+
+with open(path) as f:
+
+content = json.load(f)
+
+subtotal += float(content['value'])
+
+name = path.split('/')[-1]
+
+destination = f"./processed/{name}"
+
+shutil.move(path, destination)
+
+print(f"moved '{path}' to '{destination}'")
+
+
+print("Receipt subtotal: $%.2f" % subtotal)
+
+Let’s add some files that don’t match our pattern to the new directory before running our script
+
+Finally, let’s run our script twice and see what we get:
+
+$ python3.6 process_receipts.py
+moved './new/receipt-0.json' to './processed/receipt-0.json'
+moved './new/receipt-1.json' to './processed/receipt-1.json'
+moved './new/receipt-2.json' to './processed/receipt-2.json'
+moved './new/receipt-3.json' to './processed/receipt-3.json'
+moved './new/receipt-4.json' to './processed/receipt-4.json'
+moved './new/receipt-5.json' to './processed/receipt-5.json'
+moved './new/receipt-6.json' to './processed/receipt-6.json'
+moved './new/receipt-7.json' to './processed/receipt-7.json'
+moved './new/receipt-8.json' to './processed/receipt-8.json'
+moved './new/receipt-9.json' to './processed/receipt-9.json'
+Receipt subtotal: $6932.04
+$ python3.6 process_receipts.py
+'processed' directory already exists
+Receipt subtotal: $0.00
+
+#################################
+Useful Standard Library Packages
+#################################
+
+More Specific Patterns Using Regular Expressions (The re Module)
+
+Occasionally, we need to be very specific about string patterns that we use, and sometimes those are just not doable with basic globbing. As an exercise in this, let’s change our process_receipts.py file to only return even numbered files (regardless of length). Let’s generate some more receipts and try to accomplish this from the REPL:
+
+$ FILE_COUNT=20 python3.6 gen_receipts.py
+$ python3.6
+>>> import glob
+>>> receipts = glob.glob('./new/receipt-[0-9]*[24680].json')
+>>> receipts.sort()
+>>> receipts
+['./new/receipt-10.json', './new/receipt-12.json', './new/receipt-14.json', './new/receipt-16.json', './new/receipt-18.json']
+
+That glob was pretty close, but it didn’t give us the single-digit even numbers. Let’s try now using the re (Regular Expression) module’s match function, the glob.iglob function, and a list comprehension:
+
+>>> import re
+>>> receipts = [f for f in glob.iglob('./new/receipt-[0-9]*.json') if re.match('./new/receipt-[0-9]*[02468].json', f)]
+>>> receipts
+['./new/receipt-0.json', './new/receipt-2.json', './new/receipt-4.json', './new/receipt-6.json', './new/receipt-8.json', './new/receipt-10.json', './new/receipt-12.json', './new/receipt-14.json', './new/receipt-16.json', './new/receipt-18.json']
+
+We’re using the glob.iglob function instead of the standard glob function because we knew we were going to iterate through it and make modifications at the same time. This iterator allows us to avoid fitting the whole expanded glob.glob list into memory at one time.
+
+Regular Expressions are a pretty big topic, but once you’ve learned them, they are incredibly useful in scripts and also when working with tools like grep. The re module gives us quite a few powerful ways to use regular expressions in our python code.
+
+Improved String Replacement
+
+One actual improvement that we can make to our process_receipts.py file is that we can use a single function call to go from our path variable to the destination that we want. This section:
+
+~/receipts/process_receipts.py (partial)
+
+    name = path.split('/')[-1]
+    destination = f"./processed/{name}"
+
+Becomes this using the str.replace method:
+
+    destination = path.replace('new', 'processed')
+
+This is a useful refactoring to make because it makes the intention of our code more clear.
+
+Working With Numbers Using math
+
+Depending on how we want to process the values of our receipts, we might want to manipulate the numbers that we are working with by rounding; going to the next highest integer, or the next lowest integer. These sort of “rounding” actions are pretty common, and some of them require the math module:
+
+>>> import math
+>>> math.ceil(1.1)
+2
+>>> math.floor(1.1)
+1
+>>> round(1.1111111111, 2)
+1.11
+
+We can utilize the built-in round function to clean up the printing of the subtotal at the end of the script. Here’s the final version of process_receipts.py:
+
+~/receipts/process_receipts.py
+
+import glob
+import os
+import shutil
+import json
+try:
+
+os.mkdir("./processed")
+
+except OSError:
+
+print("'processed' directory already exists")
+
+
+subtotal = 0.0
+
+
+for path in glob.iglob('./new/receipt-[0-9]*.json'):
+
+with open(path) as f:
+
+content = json.load(f)
+
+subtotal += float(content['value'])
+
+destination = path.replace('new', 'processed')
+
+shutil.move(path, destination)
+
+print(f"moved '{path}' to '{destination}'")
+
+
+print(f"Receipt subtotal: ${round(subtotal, 2)}")
+
+Truncate Float Without Rounding
+
+you can do some more complicated math to print a number to a specified number of digits without rounding. Here’s an example a function that would do the truncation
+
+>>> import math
+>>> def ftruncate(f, ndigits=None):
+...     if ndigits and (ndigits > 0):
+...         multiplier = 10 ** ndigits
+...         num = math.floor(f * multiplier) / multiplier
+...     else:
+...         num = math.floor(f)
+...     return num
+>>> num = 1.5441020468646993
+>>> ftruncate(num)
+1
+>>> ftruncate(num, 2)
+1.54
+>>> ftruncate(num, 8)
+1.54410204
+
+
+
